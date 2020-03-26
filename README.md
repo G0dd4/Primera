@@ -1,2 +1,2 @@
 # Primera
-Robotique proect by student in first year engineering school
+Robotique project by student in first year engineering school
