@@ -6,20 +6,23 @@
 
 
 
-// Blinking rate in milliseconds
 #include "DRV8825.h"
-#define BLINKING_RATE_MS 500
+
+#define pinEN PI_3
+#define pinDIR PI_0
+#define pinSTEP PH_6
 
 
 int main()
 {
-    // Initialise the digital pin LED1 as an output
-    DRV8825 drv8825(D7,D5,D6);
+    FastPWM led(PB_8 );
+    DRV8825 drv8825(pinEN,pinDIR,pinSTEP);
+
 
     while (true) {
-        drv8825.setDir(FORWARD);
         drv8825.setEnable(START);
-        drv8825.move(10000);
+        drv8825.setDir(STOP);
+        drv8825.move(1);
 
     }
 }
