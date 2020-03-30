@@ -15,7 +15,6 @@
 
 int main()
 {
-    FastPWM led(PB_8 );
     DRV8825 drv8825(pinEN,pinDIR,pinSTEP);
 
 
