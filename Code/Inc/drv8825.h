@@ -3,6 +3,7 @@
 
 #include "mbed.h"
 #include "platform/mbed_thread.h"
+#include "FastPWM.h"
 
 #define FORWARD 1
 #define BACKWARD 0
@@ -17,13 +18,13 @@ class DRV8825{
 
     void setDir(uint8_t dir);
     void setEnable(uint8_t en);
-    void move(float Frequency);
+    void move(unsigned int Frequency);
 
 
     private:
     DigitalOut* m_en;
     DigitalOut* m_dir;
-    PwmOut* m_step;
+    FastPWM* m_step;
 
 };
 
