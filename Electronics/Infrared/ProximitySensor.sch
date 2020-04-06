@@ -4912,7 +4912,7 @@ Source: http://download.siliconexpert.com/pdfs/2005/02/24/Semi_Ap/2/VSH/Resistor
 </classes>
 <parts>
 <part name="IC1" library="linear" deviceset="LM358" device="D" value="LM358D"/>
-<part name="R1" library="rcl" deviceset="R-TRIMM" device="4G/J"/>
+<part name="R1" library="rcl" deviceset="R-TRIMM" device="T93YA"/>
 <part name="LED_IR" library="led" deviceset="SFH482" device=""/>
 <part name="P+1" library="supply1" deviceset="VCC" device=""/>
 <part name="GND1" library="supply1" deviceset="GND" device=""/>
