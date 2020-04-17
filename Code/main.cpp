@@ -4,9 +4,11 @@
  */
 
 
+#include "SRC/interface.h"
+#include "SRC/DRV8825.h"
+#include "lv_port_disp.h"
+#include "lv_port_indev.h"
 
-
-#include "DRV8825.h"
 
 #define pinEN PI_3
 #define pinDIR PI_0
@@ -16,7 +18,7 @@
 int main()
 {
     DRV8825 drv8825(pinEN,pinDIR,pinSTEP);
-
+    initWindow();
 
     while (true) {
         drv8825.setEnable(START);
