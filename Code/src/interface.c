@@ -19,6 +19,7 @@ void initWindow(){
     m_calc= lv_tabview_add_tab(tv, "Calcule");
 
     creatProg(m_prog);
+    creatLabi(m_labi);
 }
 
 void styleWindow(){

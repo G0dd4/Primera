@@ -21,11 +21,13 @@ void creatProg(lv_obj_t* m_prog){
     lv_list_set_style(m_list_prog, LV_LIST_STYLE_BG, &lv_style_transp_tight);
     lv_list_set_style(m_list_prog, LV_LIST_STYLE_SCRL, &lv_style_transp_tight);
     lv_list_set_style(m_list_prog, LV_LIST_STYLE_BTN_REL, &m_prog_styleBtRel);
-    lv_list_set_style(m_list_prog, LV_LIST_STYLE_BTN_PR, &m_prog_styleBtPar);
+    lv_list_set_style(m_list_prog, LV_LIST_STYLE_BTN_PR, &m_prog_styleBtPr);
     lv_obj_align(m_list_prog, NULL, LV_ALIGN_IN_TOP_MID, 0, LV_DPI / 4);
-    lv_obj_set_pos(m_list_prog,lv_page_get_scrl_width(m_prog)/2 +40,0);
+    lv_obj_set_pos(m_list_prog,lv_page_get_scrl_width(m_prog)/2 +30,0);
 
-
+    /**********************
+     * ajouts des boutons *
+     **********************/
     m_listBt_prog = lv_list_add_btn(m_list_prog,LV_SYMBOL_OK,"valider");
     lv_obj_set_event_cb(m_listBt_prog,btValidEventHandler);
     m_listBt_prog = lv_list_add_btn(m_list_prog,LV_SYMBOL_REFRESH, "verifier");
@@ -64,9 +66,10 @@ void styleProg(lv_obj_t* m_prog){
     m_prog_styleKb.body.padding.bottom = 0;
     m_prog_styleKb.body.padding.inner = 0;
 
-    /*******************************
-     * style des bouton du clavier *
-     *******************************/
+    /***************************************
+     * style des bouton du clavier lorsque *
+     * l'on appuis pas sur une touche      *
+     ***************************************/
     lv_style_copy(&m_prog_styleKbRel, &lv_style_plain);
     m_prog_styleKbRel.body.opa = LV_OPA_TRANSP;
     m_prog_styleKbRel.body.radius = 0;
@@ -77,21 +80,23 @@ void styleProg(lv_obj_t* m_prog){
     m_prog_styleKbRel.body.grad_color = lv_color_hex3(0x333);
     m_prog_styleKbRel.text.color = LV_COLOR_WHITE;
 
-    /****************************
-     * style du corp du clavier *
-     ****************************/
-    lv_style_copy(&m_prog_styleKbPar, &lv_style_plain);
-    m_prog_styleKbPar.body.radius = 0;
-    m_prog_styleKbPar.body.opa = LV_OPA_50;
-    m_prog_styleKbPar.body.main_color = LV_COLOR_WHITE;
-    m_prog_styleKbPar.body.grad_color = LV_COLOR_WHITE;
-    m_prog_styleKbPar.body.border.width = 1;
-    m_prog_styleKbPar.body.border.color = LV_COLOR_SILVER;
+    /***************************************
+     * style des bouton du clavier lorsque *
+     * l'on appuis sur une touche          *
+     ***************************************/
+    lv_style_copy(&m_prog_styleKbPr, &lv_style_plain);
+    m_prog_styleKbPr.body.radius = 0;
+    m_prog_styleKbPr.body.opa = LV_OPA_50;
+    m_prog_styleKbPr.body.main_color = LV_COLOR_WHITE;
+    m_prog_styleKbPr.body.grad_color = LV_COLOR_WHITE;
+    m_prog_styleKbPr.body.border.width = 1;
+    m_prog_styleKbPr.body.border.color = LV_COLOR_SILVER;
 
 
-    /****************************
-     * style de la liste bouton *
-     ****************************/
+    /************************************
+     * style de la liste bouton lorsque *
+     * l'on appuis pas sur une touche   *
+     ************************************/
     lv_style_copy(&m_prog_styleBtRel, &lv_style_btn_rel);
     m_prog_styleBtRel.body.main_color = lv_color_hex3(0x333);
     m_prog_styleBtRel.body.grad_color = LV_COLOR_BLACK;
@@ -100,13 +105,14 @@ void styleProg(lv_obj_t* m_prog){
     m_prog_styleBtRel.body.border.opa = LV_OPA_50;
     m_prog_styleBtRel.body.radius = 0;
 
-    /********************************
-     * style de la liste de parrent *
-     ********************************/
-    lv_style_copy(&m_prog_styleBtPar, &m_prog_styleBtRel);
-    m_prog_styleBtPar.body.main_color = lv_color_make(0x55, 0x96, 0xd8);
-    m_prog_styleBtPar.body.grad_color = lv_color_make(0x37, 0x62, 0x90);
-    m_prog_styleBtPar.text.color = lv_color_make(0xbb, 0xd5, 0xf1);
+    /************************************
+     * style de la liste bouton lorsque *
+     * l'on appuis sur une touche       *
+     ************************************/
+    lv_style_copy(&m_prog_styleBtPr, &m_prog_styleBtRel);
+    m_prog_styleBtPr.body.main_color = lv_color_make(0x55, 0x96, 0xd8);
+    m_prog_styleBtPr.body.grad_color = lv_color_make(0x37, 0x62, 0x90);
+    m_prog_styleBtPr.text.color = lv_color_make(0xbb, 0xd5, 0xf1);
 
 }
 
@@ -120,11 +126,13 @@ static void btVerifEventHandler(lv_obj_t* bt, lv_event_t event){
 }
 static void taEventHandler(lv_obj_t* ta, lv_event_t event){
 
-    /*Text area is on the scrollable part of the page but we need the page itself*/
     lv_obj_t * parent = lv_obj_get_parent(lv_obj_get_parent(ta));
 
     if(event == LV_EVENT_CLICKED) {
         if(m_kb_prog == NULL) {
+            /************************************
+             * Création et placement du clavier *
+             ************************************/
             m_kb_prog = lv_kb_create(parent, NULL);
             lv_obj_set_size(m_kb_prog, lv_obj_get_width_fit(parent), lv_obj_get_height_fit(parent) / 2);
             lv_obj_align(m_kb_prog, ta, LV_ALIGN_OUT_BOTTOM_MID, 0, 0);
@@ -132,9 +140,13 @@ static void taEventHandler(lv_obj_t* ta, lv_event_t event){
             lv_obj_set_pos(m_kb_prog,120,lv_obj_get_height_fit(parent) / 2);
             lv_kb_set_style(m_kb_prog, LV_KB_STYLE_BG, &m_prog_styleKb);
             lv_kb_set_style(m_kb_prog, LV_KB_STYLE_BTN_REL, &m_prog_styleKbRel);
-            lv_kb_set_style(m_kb_prog, LV_KB_STYLE_BTN_PR, &m_prog_styleKbPar);
+            lv_kb_set_style(m_kb_prog, LV_KB_STYLE_BTN_PR, &m_prog_styleKbPr);
             lv_obj_set_event_cb(m_kb_prog, kbEventHandler);
 
+            /*********************************
+             * création d'une animation pour *
+             * l'apparition du clavier       *
+             *********************************/
             lv_anim_t a;
             a.var = m_kb_prog;
             a.start = LV_VER_RES;
@@ -156,8 +168,15 @@ static void taEventHandler(lv_obj_t* ta, lv_event_t event){
 static void kbEventHandler(lv_obj_t* kb, lv_event_t event){
 
     lv_kb_def_event_cb(kb, event);
+    /************************************
+     * si nous appuiyons sur le bouton  *
+     * CANCEL OU APPLY                  *
+     ************************************/
     if(event == LV_EVENT_APPLY || event == LV_EVENT_CANCEL) {
-
+        /*********************************
+         * Création d'une animation pour *
+         * la disparition du clavier     *
+         *********************************/
         lv_anim_t a;
         a.var = kb;
         a.start = lv_obj_get_y(kb);
@@ -174,7 +193,12 @@ static void kbEventHandler(lv_obj_t* kb, lv_event_t event){
         lv_anim_create(&a);
     }
 }
+
 static void kbHide(lv_anim_t* a){
+    /*******************************************
+     * à la fin de l'animation nous détruisons *
+     * le clavier et l'animation               *
+     *******************************************/
     lv_obj_del(a->var);
     m_kb_prog = NULL;
 }

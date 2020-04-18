@@ -9,9 +9,9 @@
 static lv_style_t m_prog_styleTa;
 static lv_style_t m_prog_styleKb;
 static lv_style_t m_prog_styleKbRel;
-static lv_style_t m_prog_styleKbPar;
+static lv_style_t m_prog_styleKbPr;
 static lv_style_t m_prog_styleBtRel;
-static lv_style_t m_prog_styleBtPar;
+static lv_style_t m_prog_styleBtPr;
 
 
 /****************************
