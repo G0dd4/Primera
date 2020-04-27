@@ -14,9 +14,9 @@ void initWindow(){
     lv_obj_set_size(tv, hres, vres);
 
 
-    m_prog = lv_tabview_add_tab(tv, "Programation");
-    m_labi = lv_tabview_add_tab(tv, "labyrinthe");
-    m_calc= lv_tabview_add_tab(tv, "Calcule");
+    m_prog = lv_tabview_add_tab(tv, "Programmation");
+    m_labi = lv_tabview_add_tab(tv, "Labyrinthe");
+    m_calc= lv_tabview_add_tab(tv, "Calcul");
 
     creatProg(m_prog);
     creatLabi(m_labi);

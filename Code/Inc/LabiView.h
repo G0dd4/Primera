@@ -11,7 +11,8 @@ static lv_style_t m_labi_styleSqrB;
 static lv_style_t m_labi_styleSqrG;
 static lv_style_t m_labi_styleSqrP;
 static lv_style_t m_labi_styleDdlist;
-static lv_style_t m_labi_styleBtn;
+static lv_style_t m_labi_styleBtnRel;
+static lv_style_t m_labi_styleBtnPr;
 
 /****************************
  * composants de la fenêtre *
