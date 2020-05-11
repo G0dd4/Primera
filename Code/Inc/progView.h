@@ -3,28 +3,7 @@
 #include "lvgl/lvgl.h"
 //#include <string>
 
-/*****************************
- * Les styles des composants *
- * de la fenêtres Prog       *
- *****************************/
-static lv_style_t m_prog_styleTa;
-static lv_style_t m_prog_styleKb;
-static lv_style_t m_prog_styleKbRel;
-static lv_style_t m_prog_styleKbPr;
-static lv_style_t m_prog_styleBtRel;
-static lv_style_t m_prog_styleBtPr;
-static lv_style_t m_prog_styleMbox;
 
-
-/****************************
- * composants de la fenêtre *
- * Prog                     *
- ****************************/
-static lv_obj_t* m_ta_prog;
-static lv_obj_t* m_kb_prog;
-static lv_obj_t* m_list_prog;
-static lv_obj_t* m_listBt_prog;
-static lv_obj_t* m_mbox_prog;
 
 
 /**************************
@@ -36,6 +15,7 @@ void styleProg(lv_obj_t* m_prog);
 /********************
  * fonctions string *
  ********************/
+int verifTa();
 
 /*******************
  * différent event *

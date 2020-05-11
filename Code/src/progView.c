@@ -2,6 +2,30 @@
 #include <stdio.h>
 #include <string.h>
 
+/*****************************
+ * Les styles des composants *
+ * de la fenêtres Prog       *
+ *****************************/
+static lv_style_t m_prog_styleTa;
+static lv_style_t m_prog_styleKb;
+static lv_style_t m_prog_styleKbRel;
+static lv_style_t m_prog_styleKbPr;
+static lv_style_t m_prog_styleBtRel;
+static lv_style_t m_prog_styleBtPr;
+static lv_style_t m_prog_styleMbox;
+
+
+/****************************
+ * composants de la fenêtre *
+ * Prog                     *
+ ****************************/
+static lv_obj_t* m_ta_prog;
+static lv_obj_t* m_kb_prog;
+static lv_obj_t* m_list_prog;
+static lv_obj_t* m_listBt_prog;
+static lv_obj_t* m_mbox_prog;
+
+
 void creatProg(lv_obj_t* m_prog){
     styleProg(m_prog);
 
@@ -121,66 +145,88 @@ void styleProg(lv_obj_t* m_prog){
 
 
 static void btValidEventHandler(lv_obj_t* bt, lv_event_t event){
+    (void)bt;
+    if(event == LV_EVENT_CLICKED){
+        verifTa();
 
+    }
 }
 static void btVerifEventHandler(lv_obj_t* bt, lv_event_t event){
-
-    lv_obj_t * parent = lv_obj_get_parent(lv_obj_get_parent(m_ta_prog));
-    lv_coord_t hres = lv_disp_get_hor_res(NULL);
+    (void)bt;
     if(event == LV_EVENT_CLICKED){
-        int length = strlen(lv_ta_get_text(m_ta_prog));
-
-        char text[length+1];
-        strcpy(text,lv_ta_get_text(m_ta_prog));
-
-        char data[10];
-        int j = 0;
-        int ligne = 0;
-
-
-        for (int i = 0;i < length; i++) {
-            if (text[i] == '\n' || i == length - 1) {
-                data[j] = '\0';
-                ligne++;
-                if (strcmp(data,"Avancer\0")==0 || strcmp(data,"avancer\0")==0 || strcmp(data,"AVANCER\0")==0){
-                    printf("Avancer\n");
-                }
-                else if (strcmp(data, "Reculer\0")==0 || strcmp(data, "reculer\0")==0 || strcmp(data,"RECULER\0")==0){
-                    printf("Reculer \n");
-                }
-                else if (strcmp(data,"Gauche\0")==0 || strcmp(data,"gauche\0")==0 || strcmp(data,"GAUCHE\0")==0){
-                    printf("Gauche  \n");
-                }
-                else if (strcmp(data,"Droite\0") == 0 || strcmp(data, "droite\0")==0 || strcmp( data, "DROITE\0")==0){
-
-                    printf("Droite \n");
-                }
-                else {
-
-                    printf("wrong\n");
-                    m_mbox_prog = lv_mbox_create(parent,NULL);
-                    lv_mbox_set_text(m_mbox_prog,"Vous avez une erreur à la ligne : 1");
-                    static const char * mbox_btns[] = {"Ok", ""};
-                    lv_mbox_add_btns(m_mbox_prog, mbox_btns);    /*The default action is close*/
-                    lv_obj_set_size(m_mbox_prog,200,50);
-                    lv_obj_set_x(m_mbox_prog,200);
-                    lv_obj_set_y(m_mbox_prog,50);
-
-
-                }
-                j = 0;
-            }
-            else {
-                data[j] = text[i];
-                j++;
-
-
-            }
-
+        if(verifTa() == 0){
+            //instructions bla bla
         }
     }
 
 }
+
+int verifTa(){
+    lv_obj_t * parent = lv_obj_get_parent(lv_obj_get_parent(m_ta_prog));
+    int error = 0;
+
+    int length = strlen(lv_ta_get_text(m_ta_prog));
+
+    char errorMessage[40];
+    char text[length+1];
+
+
+    strcpy(text,lv_ta_get_text(m_ta_prog));
+    text[length] = '\n';
+    char data[10];
+
+    int j = 0;
+    int ligne = 0;
+
+    for (int i = 0;i < length+1; i++) {
+        if (text[i] == '\n') {
+            data[j] = '\0';
+
+            ligne++;
+            if (strcmp(data,"Avancer\0")==0 || strcmp(data,"avancer\0")==0 || strcmp(data,"AVANCER\0")==0){
+                printf("Avancer\n");
+            }
+            else if (strcmp(data, "Reculer\0")==0 || strcmp(data, "reculer\0")==0 || strcmp(data,"RECULER\0")==0){
+                printf("Reculer \n");
+            }
+            else if (strcmp(data,"Gauche\0")==0 || strcmp(data,"gauche\0")==0 || strcmp(data,"GAUCHE\0")==0){
+                printf("Gauche  \n");
+            }
+            else if (strcmp(data,"Droite\0") == 0 || strcmp(data, "droite\0")==0 || strcmp( data, "DROITE\0")==0){
+
+                printf("Droite \n");
+            }
+            else {
+                printf("wrong\n");
+
+                /*********************************
+                 * création et placement du mbox *
+                 *********************************/
+                m_mbox_prog = lv_mbox_create(parent,NULL);
+                sprintf(errorMessage,"Vous avez une erreur à la ligne : %d",ligne);
+                lv_mbox_set_text(m_mbox_prog,errorMessage);
+                static const char * mbox_btns[] = {"Ok", ""};
+                lv_mbox_add_btns(m_mbox_prog, mbox_btns);    /*The default action is close*/
+                lv_obj_set_size(m_mbox_prog,200,50);
+                lv_obj_set_x(m_mbox_prog,200);
+                lv_obj_set_y(m_mbox_prog,50);
+                error--;
+
+            }
+            text[0] = '\0';
+            j = 0;
+        }
+        else {
+            data[j] = text[i];
+            j++;
+
+
+        }
+
+    }
+    return error;
+}
+
 static void taEventHandler(lv_obj_t* ta, lv_event_t event){
 
     lv_obj_t * parent = lv_obj_get_parent(lv_obj_get_parent(ta));
@@ -230,10 +276,10 @@ static void kbEventHandler(lv_obj_t* kb, lv_event_t event){
      * CANCEL OU APPLY                  *
      ************************************/
     if(event == LV_EVENT_APPLY || event == LV_EVENT_CANCEL) {
-        /*********************************
-         * Création d'une animation pour *
-         * la disparition du clavier     *
-         *********************************/
+       /*********************************
+        * Création d'une animation pour *
+        * la disparition du clavier     *
+        *********************************/
         lv_anim_t a;
         a.var = kb;
         a.start = lv_obj_get_y(kb);
@@ -259,3 +305,7 @@ static void kbHide(lv_anim_t* a){
     lv_obj_del(a->var);
     m_kb_prog = NULL;
 }
+
+
+
+

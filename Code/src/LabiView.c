@@ -1,5 +1,31 @@
 #include "LabiView.h"
 
+/*****************************
+ * Les styles des composants *
+ * de la fenêtres Labi       *
+ *****************************/
+static lv_style_t m_labi_styleSqrR;
+static lv_style_t m_labi_styleSqrB;
+static lv_style_t m_labi_styleSqrG;
+static lv_style_t m_labi_styleSqrP;
+static lv_style_t m_labi_styleDdlist;
+static lv_style_t m_labi_styleBtnRel;
+static lv_style_t m_labi_styleBtnPr;
+
+/****************************
+ * composants de la fenêtre *
+ * Labi                     *
+ ****************************/
+static lv_obj_t* m_SqrR_labi;
+static lv_obj_t* m_SqrB_labi;
+static lv_obj_t* m_SqrG_labi;
+static lv_obj_t* m_SqrP_labi;
+static lv_obj_t* m_ddlistR_labi;
+static lv_obj_t* m_ddlistB_labi;
+static lv_obj_t* m_ddlistG_labi;
+static lv_obj_t* m_ddlistP_labi;
+static lv_obj_t* m_btn_labi;
+
 void creatLabi(lv_obj_t* m_labi){
     styleLabi(m_labi);
 
@@ -53,12 +79,14 @@ void creatLabi(lv_obj_t* m_labi){
     lv_btn_set_style(m_SqrP_labi,LV_BTN_STATE_REL,&m_labi_styleSqrP);
     lv_btn_set_style(m_SqrP_labi,LV_BTN_STATE_PR,&m_labi_styleSqrP);
 
-
+    lv_obj_t* label;
     m_btn_labi = lv_btn_create(m_labi,NULL);
     lv_obj_set_size(m_btn_labi,100,30);
-    lv_obj_set_pos(m_btn_labi,190,180);
+    lv_obj_set_pos(m_btn_labi,190,175);
     lv_btn_set_style(m_btn_labi,LV_BTN_STATE_REL,&m_labi_styleBtnRel);
     lv_btn_set_style(m_btn_labi,LV_BTN_STATE_PR,&m_labi_styleBtnPr);
+    label = lv_label_create(m_btn_labi,NULL);
+    lv_label_set_text(label,"valider");
 
 
 
@@ -66,7 +94,9 @@ void creatLabi(lv_obj_t* m_labi){
 }
 
 void styleLabi(lv_obj_t* m_labi){
-
+    /********************
+     * style des carrés *
+     ********************/
     lv_style_copy(&m_labi_styleSqrB, &lv_style_pretty);
     m_labi_styleSqrB.body.shadow.width = 0;
     m_labi_styleSqrB.body.main_color = LV_COLOR_BLUE;
@@ -86,11 +116,19 @@ void styleLabi(lv_obj_t* m_labi){
     m_labi_styleSqrP.body.grad_color = LV_COLOR_PURPLE;
 
 
+    /*********************
+     * style des ddlists *
+     *********************/
     lv_style_copy(&m_labi_styleDdlist, &lv_style_pretty);
     m_labi_styleSqrB.body.shadow.width = 4;
     m_labi_styleSqrB.text.color = LV_COLOR_MAKE(0x10, 0x20, 0x50);
 
 
+
+    /***********************************
+     * style du bouton valider lorsque *
+     * l'on apppuis pas desus          *
+     ***********************************/
     lv_style_copy(&m_labi_styleBtnRel,&lv_style_btn_rel);
     m_labi_styleBtnRel.body.main_color = lv_color_hex3(0x333);
     m_labi_styleBtnRel.body.grad_color = LV_COLOR_BLACK;
@@ -99,7 +137,10 @@ void styleLabi(lv_obj_t* m_labi){
     m_labi_styleBtnRel.body.border.opa = LV_OPA_50;
     m_labi_styleBtnRel.body.radius = 0;
 
-
+    /***********************************
+     * style du bouton valider lorsque *
+     * l'on apppuis desus              *
+     ***********************************/
     lv_style_copy(&m_labi_styleBtnPr, &m_labi_styleBtnRel);
     m_labi_styleBtnPr.body.main_color = lv_color_make(0x55, 0x96, 0xd8);
     m_labi_styleBtnPr.body.grad_color = lv_color_make(0x37, 0x62, 0x90);
