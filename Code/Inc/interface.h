@@ -3,6 +3,7 @@
 
 #include "progView.h"
 #include "LabiView.h"
+#include "calcView.h"
 #include <SDL2/SDL.h> //provisoir (simulation PC)
 #include "lvgl/lvgl.h"
 #include "lv_drivers/display/monitor.h" //provisoir (simulation PC)
