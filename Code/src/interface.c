@@ -20,6 +20,7 @@ void initWindow(){
 
     creatProg(m_prog);
     creatLabi(m_labi);
+    creatCalc(m_calc);
 }
 
 void styleWindow(){
